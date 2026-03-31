@@ -642,10 +642,16 @@
   }
 
   document.getElementById('intakeForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    this.style.display = 'none';
-    document.getElementById('confirmation').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      e.preventDefault();
+      const data = new FormData(this);
+      fetch('https://formsubmit.co/ajax/parkerbranham@gmail.com', {
+          method: 'POST',
+          body: data
+      }).then(() => {
+          this.style.display = 'none';
+          document.getElementById('confirmation').style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
   });
 </script>
 
