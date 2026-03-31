@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Design by Parker Branham</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:     #1a1a2e;
+      --mid:     #4a4a6a;
+      --soft:    #8888aa;
+      --rule:    #dddde8;
+      --bg:      #f9f8f5;
+      --paper:   #ffffff;
+      --accent:  #2d5a8e;
+      --accent2: #c8a96e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    header {
+      background: var(--ink);
+      color: #fff;
+      padding: 64px 40px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.03) 60px,
+        rgba(255,255,255,0.03) 61px
+      );
+    }
+
+    .header-inner { position: relative; max-width: 640px; margin: 0 auto; }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 18px;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    header p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.6);
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0 auto 28px;
+    }
+
+    .header-link {
+      display: inline-block;
+      font-size: 13px;
+      color: var(--accent2);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200,169,110,0.4);
+      padding-bottom: 2px;
+      transition: border-color .2s;
+    }
+    .header-link:hover { border-color: var(--accent2); }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    section { margin-bottom: 64px; }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .section-sub {
+      color: var(--mid);
+      font-size: 15px;
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    hr.rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 32px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .price-tag {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .card-desc {
+      color: var(--mid);
+      font-size: 15px;
+      margin-bottom: 20px;
+      line-height: 1.65;
+    }
+
+    .card ul { list-style: none; padding: 0; }
+
+    .card ul li {
+      font-size: 14px;
+      color: var(--mid);
+      padding: 7px 0;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .card ul li:last-child { border-bottom: none; }
+
+    .card ul li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent2);
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--soft);
+      font-style: italic;
+      margin-top: 12px;
+    }
+
+    .info-box {
+      background: var(--ink);
+      color: rgba(255,255,255,0.8);
+      border-radius: 10px;
+      padding: 28px 32px;
+      font-size: 15px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .info-box strong { color: var(--accent2); font-weight: 500; }
+
+    .steps { display: flex; flex-direction: column; }
+
+    .step {
+      display: flex;
+      gap: 24px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--rule);
+      line-height: 1;
+      min-width: 36px;
+      padding-top: 2px;
+    }
+
+    .step-title {
+      font-weight: 500;
+      font-size: 16px;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: var(--mid);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    .update-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .update-table th {
+      background: var(--ink);
+      color: rgba(255,255,255,0.9);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      text-align: left;
+    }
+
+    .update-table td {
+      padding: 14px 20px;
+      font-size: 15px;
+      color: var(--mid);
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .update-table tr:last-child td { border-bottom: none; }
+
+    .update-table td:last-child {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      color: var(--accent);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .update-table td .sub {
+      display: block;
+      font-size: 12px;
+      color: var(--soft);
+      margin-top: 3px;
+    }
+
+    .update-table tr:hover td { background: #f4f4f8; }
+
+    .agreement {
+      background: var(--ink);
+      color: rgba(255,255,255,0.8);
+      border-radius: 10px;
+      padding: 32px;
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .agreement strong { color: var(--accent2); font-weight: 500; }
+
+    .agree-row {
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .agree-row:first-child { padding-top: 0; }
+    .agree-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .contact-block {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 36px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .contact-block h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .contact-block p { font-size: 14px; color: var(--mid); font-weight: 300; }
+
+    .contact-links { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+
+    .contact-btn {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .2s;
+    }
+
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #1e4070; }
+    .btn-secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+    .btn-secondary:hover { background: #eef3f9; }
+
+    footer {
+      text-align: center;
+      padding: 32px;
+      font-size: 13px;
+      color: var(--soft);
+      border-top: 1px solid var(--rule);
+    }
+
+    @media (max-width: 540px) {
+      header { padding: 48px 24px 40px; }
+      .card-header { flex-direction: column; gap: 8px; }
+      .contact-block { flex-direction: column; }
+      .contact-links { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="eyebrow">Web Design · Columbia, SC</div>
+      <h1>Websites by<br>Parker Branham</h1>
+      <p>Hand-coded portfolio websites for students. No templates. Written in real HTML, CSS, and JavaScript.</p>
+      <a href="https://oneredpanda99.github.io" target="_blank" class="header-link">See my work at oneredpanda99.github.io</a>
+    </div>
+  </header>
+
+  <main>
+
+    <section>
+      <div class="section-label">What I build</div>
+      <h2>Portfolio Websites</h2>
+      <p class="section-sub">A personal website a student can use for college applications, internships, or just having something real to point people to. Every site is written from scratch.</p>
+      <hr class="rule">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Portfolio Website</div>
+          <div class="price-tag">Starting at $250</div>
+        </div>
+        <p class="card-desc">Every site is different, so the price depends on how many pages are needed and how involved the design is. A straightforward 3-page site starts around $250. A site with individual pages for multiple activities or projects, animations, galleries, and custom sections will be priced higher. I'll give a clear number before any work starts.</p>
+        <ul>
+          <li>As many pages as the student needs — about, experience, individual project or activity pages, contact, and more</li>
+          <li>Design built around the student, not a template</li>
+          <li>Works on phones, tablets, and desktops</li>
+          <li>Hosted free through GitHub — the site lives on the student's own account</li>
+          <li>Free web address included (example: janesmith.github.io)</li>
+          <li>Custom domain setup included at no extra charge if you choose to get one</li>
+        </ul>
+        <p class="note">A custom domain like firstnamelastname.com is optional and typically costs around $10–15 per year through a domain registrar. The free .github.io address works just as well and doesn't expire.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-label">Before I start</div>
+      <h2>Content Comes From You</h2>
+      <p class="section-sub">I build the site. Everything that goes on it — the writing, the photos, the details — comes from the student. I don't write on anyone's behalf.</p>
+      <hr class="rule">
+      <div class="info-box">
+        <strong>Intake form</strong><br><br>
+        Once we've agreed on what the site should include, I'll send over a form that asks for everything I need to get started — bio, activities, photos, links, and anything else going on the site. There's no rush on it. When it's filled out and sent back, I get to work. If anything is unclear or missing, I'll ask before moving forward.
+      </div>
+    </section>
+
+    <section>
+      <div class="section-label">The process</div>
+      <h2>How It Works</h2>
+      <p class="section-sub">A general idea of what to expect from start to finish.</p>
+      <hr class="rule">
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">We figure out what you need</div>
+            <div class="step-desc">Reach out and we'll talk through what the site should include, how many pages, and what it should look like. Once we're on the same page, I'll give you a clear price.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Half upfront</div>
+            <div class="step-desc">Half the agreed amount is due before I start. The other half is due when the site is done and ready.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">You fill out the intake form</div>
+            <div class="step-desc">I'll send a form that walks through everything I need — text, images, links, and any other details. You fill it out at your own pace and send it back. That's the content the site is built from.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">I build and show you a preview</div>
+            <div class="step-desc">I build the site first and show it to you before anything goes live. Once you're happy with it, we move to the next step.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-title">The student sets up a GitHub account</div>
+            <div class="step-desc">When the site is ready to go live, the student will need a free GitHub account. Their username becomes their web address. I'll walk through the setup if needed — it takes a few minutes.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <div class="step-title">The site goes live on their account</div>
+            <div class="step-desc">I move everything over to the student's GitHub and publish it there. If you've gotten a custom domain, I'll connect it at this point. The second half of the payment is due here, and then I step away. The site is theirs.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-label">After delivery</div>
+      <h2>Updates</h2>
+      <p class="section-sub">No subscriptions. If something needs to change down the road, just reach out. You provide the new content and I make the update.</p>
+      <hr class="rule">
+
+      <table class="update-table">
+        <thead>
+          <tr>
+            <th>What you need</th>
+            <th style="text-align:right;">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Text changes
+              <span class="sub">You provide the exact new wording — up to 5 edits per request</span>
+            </td>
+            <td>$20</td>
+          </tr>
+          <tr>
+            <td>
+              Image swap
+              <span class="sub">Up to 4 images — includes any cropping or resizing needed</span>
+            </td>
+            <td>$25</td>
+          </tr>
+          <tr>
+            <td>
+              Add a section to an existing page
+              <span class="sub">A new block of content within a page that already exists</span>
+            </td>
+            <td>$45</td>
+          </tr>
+          <tr>
+            <td>
+              Add a new page
+              <span class="sub">Starting price — final cost depends on how involved the page is</span>
+            </td>
+            <td>From $75</td>
+          </tr>
+          <tr>
+            <td>
+              Color or font change
+              <span class="sub">New scheme applied across the whole site</span>
+            </td>
+            <td>$50</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note">Anything outside these — just ask. I'll give a price before touching anything.</p>
+    </section>
+
+    <section>
+      <div class="section-label">Good to know</div>
+      <h2>A Few Things</h2>
+      <p class="section-sub">Nothing complicated — just worth knowing going in.</p>
+      <hr class="rule">
+      <div class="agreement">
+        <div class="agree-row"><strong>The site is the student's</strong><br>It lives on their GitHub account. Once it's paid for, it's fully theirs.</div>
+        <div class="agree-row"><strong>Payment is split in two</strong><br>Half before I start, half when the site is done. The site doesn't go live on their account until the balance is paid.</div>
+        <div class="agree-row"><strong>You write it, I build it</strong><br>All the words and photos come from the student. I put it all together — I don't write personal content for anyone.</div>
+        <div class="agree-row"><strong>Hosting is free through GitHub</strong><br>The site is hosted at no cost through GitHub Pages. Keeping the account open is on the student.</div>
+        <div class="agree-row"><strong>Custom domains are optional</strong><br>The free .github.io address is permanent. If you want a custom domain, that's up to you to purchase and renew. I'll connect it at no extra charge.</div>
+        <div class="agree-row"><strong>Updates are separate</strong><br>After the site is handed over, any changes are available at the rates listed above.</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-label">Get in touch</div>
+      <h2>Interested?</h2>
+      <p class="section-sub">Reach out and we'll go from there.</p>
+      <hr class="rule">
+      <div class="contact-block">
+        <div>
+          <h3>Parker Branham</h3>
+          <p>Junior at Cardinal Newman · Columbia, SC<br>Taking on new projects</p>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:parkerbranham@gmail.com" class="contact-btn btn-primary">parkerbranham@gmail.com</a>
+          <a href="https://oneredpanda99.github.io" target="_blank" class="contact-btn btn-secondary">View my portfolio</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 Parker Branham · Web Design · Columbia, SC
+  </footer>
+
+</body>
+</html>

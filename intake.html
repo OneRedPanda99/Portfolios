@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Website Intake Form — Parker Branham</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:     #1a1a2e;
+      --mid:     #4a4a6a;
+      --soft:    #8888aa;
+      --rule:    #dddde8;
+      --bg:      #f9f8f5;
+      --paper:   #ffffff;
+      --accent:  #2d5a8e;
+      --accent2: #c8a96e;
+      --fill:    #f4f4fb;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    header {
+      background: var(--ink);
+      color: #fff;
+      padding: 48px 40px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.03) 60px,
+        rgba(255,255,255,0.03) 61px
+      );
+    }
+
+    .header-inner { position: relative; max-width: 700px; }
+
+    .eyebrow {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      font-weight: 300;
+      max-width: 520px;
+    }
+
+    main {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .form-section {
+      margin-bottom: 48px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .section-note {
+      font-size: 13px;
+      color: var(--soft);
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    hr.rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin-bottom: 24px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--mid);
+      margin-bottom: 6px;
+      letter-spacing: 0.3px;
+    }
+
+    label .required {
+      color: var(--accent2);
+      margin-left: 3px;
+    }
+
+    label .hint {
+      display: block;
+      font-weight: 300;
+      font-size: 12px;
+      color: var(--soft);
+      margin-top: 2px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      background: var(--fill);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 11px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--ink);
+      font-weight: 300;
+      transition: border-color .15s;
+      -webkit-appearance: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    textarea.tall { min-height: 130px; }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Repeatable activity block */
+    .activity-block {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+
+    .activity-block .block-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+
+    .add-btn {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 8px 18px;
+      background: transparent;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--mid);
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .add-btn:hover { border-color: var(--accent); color: var(--accent); background: #eef3f9; }
+
+    .remove-btn {
+      float: right;
+      font-size: 12px;
+      color: var(--soft);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .remove-btn:hover { color: #a05555; }
+
+    /* Page list */
+    .page-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      align-items: flex-start;
+    }
+
+    .page-item input { flex: 1; }
+
+    .page-remove {
+      flex-shrink: 0;
+      margin-top: 10px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: var(--soft);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .page-remove:hover { color: #a05555; }
+
+    /* Submit */
+    .submit-area {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .submit-note {
+      font-size: 13px;
+      color: var(--soft);
+      margin-bottom: 20px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .submit-btn {
+      display: inline-block;
+      padding: 13px 30px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .submit-btn:hover { background: #1e4070; }
+
+    /* Confirmation */
+    #confirmation {
+      display: none;
+      background: var(--ink);
+      color: rgba(255,255,255,0.85);
+      border-radius: 10px;
+      padding: 32px;
+      margin-top: 32px;
+      font-size: 15px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    #confirmation strong { color: var(--accent2); font-weight: 500; }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      font-size: 13px;
+      color: var(--soft);
+      border-top: 1px solid var(--rule);
+    }
+
+    @media (max-width: 520px) {
+      header { padding: 40px 24px 32px; }
+      .row-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="eyebrow">Web Design · Parker Branham</div>
+    <h1>Website Intake Form</h1>
+    <p>Fill this out as completely as you can. There are no wrong answers — the more detail you give, the better the site will be. If you're not sure about something, leave a note and we'll figure it out.</p>
+  </div>
+</header>
+
+<main>
+  <form id="intakeForm">
+
+    <!-- BASIC INFO -->
+    <div class="form-section">
+      <div class="section-label">To start</div>
+      <h2>Basic Information</h2>
+      <div class="section-note">Who the site is for and what it's meant to do.</div>
+      <hr class="rule">
+
+      <div class="row-2">
+        <div class="field">
+          <label>Student's full name <span class="required">*</span></label>
+          <input type="text" name="student_name" placeholder="Jane Smith"/>
+        </div>
+        <div class="field">
+          <label>Graduation year <span class="required">*</span></label>
+          <input type="text" name="grad_year" placeholder="e.g. 2026"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>School
+          <span class="hint">Where do they currently attend?</span>
+        </label>
+        <input type="text" name="school" placeholder="e.g. Cardinal Newman High School"/>
+      </div>
+
+      <div class="field">
+        <label>What is the site mainly for? <span class="required">*</span>
+          <span class="hint">College applications, internship applications, general use — or a mix. Be specific if you can.</span>
+        </label>
+        <textarea name="site_purpose" placeholder="e.g. Applying to engineering programs in fall 2026. Wants something to include in applications and share with coaches."></textarea>
+      </div>
+
+      <div class="field">
+        <label>Best contact for questions during the build
+          <span class="hint">Whoever I should reach out to if something is unclear — parent, student, either.</span>
+        </label>
+        <input type="text" name="contact_name" placeholder="Name and preferred way to reach you"/>
+      </div>
+    </div>
+
+    <!-- ABOUT / BIO -->
+    <div class="form-section">
+      <div class="section-label">About the student</div>
+      <h2>Bio and Background</h2>
+      <div class="section-note">This becomes the "About" section of the site. Write it however feels natural — first or third person, short or detailed. I'll work with what you give me.</div>
+      <hr class="rule">
+
+      <div class="field">
+        <label>Short bio <span class="required">*</span>
+          <span class="hint">A few sentences or a paragraph about who the student is. Interests, goals, personality — whatever they'd want someone to know.</span>
+        </label>
+        <textarea class="tall" name="bio" placeholder="e.g. I'm a junior at Cardinal Newman with a focus on mechanical engineering. I started tinkering with computers at 10 and have been building things ever since — servers, robots, and websites. I care about doing things well and figuring out how things work."></textarea>
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>GPA (optional)
+            <span class="hint">Include scale if not 4.0 — e.g. 3.9 / 4.0 or 4.34 SC Uniform</span>
+          </label>
+          <input type="text" name="gpa" placeholder="e.g. 4.34 SC Uniform"/>
+        </div>
+        <div class="field">
+          <label>Location (optional)
+            <span class="hint">City and state is fine.</span>
+          </label>
+          <input type="text" name="location" placeholder="e.g. Columbia, SC"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Awards or honors (optional)
+          <span class="hint">Academic, athletic, leadership, community — anything worth highlighting. List them out.</span>
+        </label>
+        <textarea name="awards" placeholder="e.g.&#10;- 4th place, Beta Club Robotics Competition&#10;- Honor roll, 2023–2026&#10;- Eagle Scout"></textarea>
+      </div>
+    </div>
+
+    <!-- ACTIVITIES / PAGES -->
+    <div class="form-section">
+      <div class="section-label">The main content</div>
+      <h2>Activities and Projects</h2>
+      <div class="section-note">Each activity or project you want its own page for gets a block below. Think of it like the pages on my site — oneredpanda99.github.io/robotics, /server, /printing. Fill out one block per page. Add as many as you need.</div>
+      <hr class="rule">
+
+      <div id="activitiesContainer">
+        <div class="activity-block">
+          <div class="block-label">Activity or Project 1</div>
+          <div class="field">
+            <label>Name <span class="required">*</span></label>
+            <input type="text" name="act_name_1" placeholder="e.g. FTC Robotics, Photography, Eagle Scout Project"/>
+          </div>
+          <div class="field">
+            <label>Your role
+              <span class="hint">What did you do? Captain, founder, member, participant, creator?</span>
+            </label>
+            <input type="text" name="act_role_1" placeholder="e.g. Team Captain and Founder"/>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label>Years involved</label>
+              <input type="text" name="act_years_1" placeholder="e.g. 2023 – Present"/>
+            </div>
+            <div class="field">
+              <label>Any links?
+                <span class="hint">Website, Instagram, video, etc.</span>
+              </label>
+              <input type="text" name="act_link_1" placeholder="https://"/>
+            </div>
+          </div>
+          <div class="field">
+            <label>Description <span class="required">*</span>
+              <span class="hint">Tell the full story here. What is it, what did you build or do, what did you accomplish, why does it matter to you? More detail means a better page.</span>
+            </label>
+            <textarea class="tall" name="act_desc_1" placeholder="e.g. I founded the FTC robotics program at Cardinal Newman from scratch in 2023. As team captain, I handle everything from designing and building the robot to managing the team and competing. We placed 4th at Beta Club Robotics — the first placement for the school in six years."></textarea>
+          </div>
+          <div class="field">
+            <label>Photos for this page (optional)
+              <span class="hint">List what you plan to send, or describe what you have. You'll send the actual files separately.</span>
+            </label>
+            <textarea name="act_photos_1" placeholder="e.g. 3 photos from competition, 2 of the robot in the shop, 1 team photo"></textarea>
+          </div>
+          <div class="field">
+            <label>Anything else for this page?
+              <span class="hint">Stats, quotes, a specific layout idea — anything you want included or that could help.</span>
+            </label>
+            <input type="text" name="act_extra_1" placeholder="e.g. Want to include a photo gallery at the bottom"/>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="add-btn" onclick="addActivity()">+ Add another activity or project</button>
+    </div>
+
+    <!-- PAGES -->
+    <div class="form-section">
+      <div class="section-label">Site structure</div>
+      <h2>Pages</h2>
+      <div class="section-note">List every page you want on the site. The activity pages above will each get their own entry. Add others like About, Contact, or a main landing page too.</div>
+      <hr class="rule">
+
+      <div id="pagesContainer">
+        <div class="page-item"><input type="text" name="page_1" placeholder="e.g. Home / Landing page"/><button type="button" class="page-remove" onclick="removePage(this)">×</button></div>
+        <div class="page-item"><input type="text" name="page_2" placeholder="e.g. About"/><button type="button" class="page-remove" onclick="removePage(this)">×</button></div>
+        <div class="page-item"><input type="text" name="page_3" placeholder="e.g. Contact"/><button type="button" class="page-remove" onclick="removePage(this)">×</button></div>
+      </div>
+      <button type="button" class="add-btn" onclick="addPage()">+ Add a page</button>
+    </div>
+
+    <!-- PHOTOS -->
+    <div class="form-section">
+      <div class="section-label">Photos and media</div>
+      <h2>Images</h2>
+      <div class="section-note">You'll send the actual photo files separately. This section is just so I know what's coming and can plan the layout around it.</div>
+      <hr class="rule">
+
+      <div class="field">
+        <label>Headshot or profile photo
+          <span class="hint">A clear, decent-quality photo of the student. Doesn't need to be professional.</span>
+        </label>
+        <input type="text" name="headshot" placeholder="e.g. Yes, will send — taken at graduation / No, skip it"/>
+      </div>
+
+      <div class="field">
+        <label>Other photos
+          <span class="hint">Anything not already listed under a specific activity. Action shots, work photos, etc.</span>
+        </label>
+        <textarea name="other_photos" placeholder="e.g. A few photos from summer internship at the architecture firm, 2 landscape shots I took on a trip"></textarea>
+      </div>
+    </div>
+
+    <!-- LINKS AND ACCOUNTS -->
+    <div class="form-section">
+      <div class="section-label">Links</div>
+      <h2>Online Profiles and Links</h2>
+      <div class="section-note">Anything that should be linked from the site.</div>
+      <hr class="rule">
+
+      <div class="row-2">
+        <div class="field">
+          <label>GitHub (if any)</label>
+          <input type="text" name="link_github" placeholder="https://github.com/username"/>
+        </div>
+        <div class="field">
+          <label>LinkedIn (if any)</label>
+          <input type="text" name="link_linkedin" placeholder="https://linkedin.com/in/..."/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Any other links to include
+          <span class="hint">Instagram, YouTube, portfolio work hosted elsewhere, a club or team website, etc.</span>
+        </label>
+        <textarea name="other_links" placeholder="e.g.&#10;Instagram @username — photography&#10;https://myproject.com — a site I built"></textarea>
+      </div>
+    </div>
+
+    <!-- DESIGN -->
+    <div class="form-section">
+      <div class="section-label">Look and feel</div>
+      <h2>Design Preferences</h2>
+      <div class="section-note">You don't need to know anything about design to fill this out. Just give me a general sense of what feels right.</div>
+      <hr class="rule">
+
+      <div class="field">
+        <label>Example sites you like (optional)
+          <span class="hint">Any websites — student portfolios, company sites, anything — where you like how they look. Paste links if you have them, or just describe what you like about them.</span>
+        </label>
+        <textarea name="design_examples" placeholder="e.g. I like how my designer's site looks (oneredpanda99.github.io) — clean, dark, not too flashy. Or I want something lighter and more minimal."></textarea>
+      </div>
+
+      <div class="field">
+        <label>Color preferences (optional)
+          <span class="hint">Dark or light? Any specific colors you like or want to avoid?</span>
+        </label>
+        <input type="text" name="colors" placeholder="e.g. Dark background, blue and white. Or: light, simple, no strong colors."/>
+      </div>
+
+      <div class="field">
+        <label>Anything you definitely don't want
+          <span class="hint">Busy layouts, certain colors, too many animations — whatever you'd like to avoid.</span>
+        </label>
+        <input type="text" name="design_avoid" placeholder="e.g. No bright colors, nothing too flashy"/>
+      </div>
+    </div>
+
+    <!-- ANYTHING ELSE -->
+    <div class="form-section">
+      <div class="section-label">Last thing</div>
+      <h2>Anything Else?</h2>
+      <div class="section-note">Questions, things I should know, details that didn't fit above — put them here.</div>
+      <hr class="rule">
+
+      <div class="field">
+        <textarea class="tall" name="other" placeholder="e.g. The site is going to be used in applications due November 1st, so I'd need it done by mid-October. / Not sure if I want a contact form or just an email address. / I have a logo I'd like to use if possible."></textarea>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p class="submit-note">When you're done, hit submit below. This sends your responses directly to Parker. He'll follow up if anything needs clarification before work starts.</p>
+      <button type="submit" class="submit-btn">Submit Form</button>
+    </div>
+
+  </form>
+
+  <div id="confirmation">
+    <strong>Got it.</strong><br><br>
+    Parker will review everything and follow up if any clarification is needed before work starts. Hang tight.
+  </div>
+
+</main>
+
+<footer>
+  Web Design by Parker Branham · Columbia, SC · <a href="mailto:parkerbranham@gmail.com" style="color:var(--soft);">parkerbranham@gmail.com</a>
+</footer>
+
+<script>
+  let activityCount = 1;
+  let pageCount = 3;
+
+  function addActivity() {
+    activityCount++;
+    const n = activityCount;
+    const container = document.getElementById('activitiesContainer');
+    const block = document.createElement('div');
+    block.className = 'activity-block';
+    block.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div class="block-label">Activity or Project ${n}</div>
+        <button type="button" class="remove-btn" onclick="this.closest('.activity-block').remove()">Remove</button>
+      </div>
+      <div class="field">
+        <label>Name <span class="required">*</span></label>
+        <input type="text" name="act_name_${n}" placeholder="e.g. FTC Robotics, Photography, Eagle Scout Project"/>
+      </div>
+      <div class="field">
+        <label>Your role<span class="hint">What did you do?</span></label>
+        <input type="text" name="act_role_${n}" placeholder="e.g. Team Captain and Founder"/>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label>Years involved</label>
+          <input type="text" name="act_years_${n}" placeholder="e.g. 2023 – Present"/>
+        </div>
+        <div class="field">
+          <label>Any links?</label>
+          <input type="text" name="act_link_${n}" placeholder="https://"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Description <span class="required">*</span><span class="hint">Full story — what is it, what did you do, why does it matter?</span></label>
+        <textarea class="tall" name="act_desc_${n}" placeholder="Write as much as you can here."></textarea>
+      </div>
+      <div class="field">
+        <label>Photos for this page (optional)<span class="hint">Describe what you plan to send.</span></label>
+        <textarea name="act_photos_${n}" placeholder="e.g. 3 photos from competition"></textarea>
+      </div>
+      <div class="field">
+        <label>Anything else for this page?</label>
+        <input type="text" name="act_extra_${n}" placeholder="e.g. Want a gallery at the bottom"/>
+      </div>
+    `;
+    container.appendChild(block);
+  }
+
+  function addPage() {
+    pageCount++;
+    const container = document.getElementById('pagesContainer');
+    const item = document.createElement('div');
+    item.className = 'page-item';
+    item.innerHTML = `<input type="text" name="page_${pageCount}" placeholder="e.g. Photography"/><button type="button" class="page-remove" onclick="removePage(this)">×</button>`;
+    container.appendChild(item);
+  }
+
+  function removePage(btn) {
+    const item = btn.closest('.page-item');
+    const container = document.getElementById('pagesContainer');
+    if (container.children.length > 1) item.remove();
+  }
+
+  document.getElementById('intakeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    document.getElementById('confirmation').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
